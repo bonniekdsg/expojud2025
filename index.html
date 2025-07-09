@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expojud25 - Galeria Interativa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+        
+        .slide-bg {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .content-slide {
+            opacity: 0;
+            transition: opacity 0.8s ease-out;
+        }
+        
+        .content-slide.active {
+            opacity: 1;
+        }
+        
+        .image-card {
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            border-radius: 20px;
+            overflow: hidden;
+            width: 140px;
+            height: 180px;
+            border: 2px solid transparent;
+            flex-shrink: 0;
+        }
+        
+        .image-card.active {
+            width: 180px;
+            height: 230px;
+            border: 3px solid white;
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .image-card.inactive {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+        
+        .image-card:hover {
+            transform: scale(1.12);
+            z-index: 20;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        @media (min-width: 1024px) {
+            .image-card {
+                width: 160px;
+                height: 200px;
+            }
+            
+            .image-card.active {
+                width: 200px;
+                height: 250px;
+                transform: scale(1.1);
+            }
+        }
+        
+        .indicator {
+            transition: all 0.4s ease;
+            width: 8px;
+            height: 8px;
+        }
+        
+        .indicator.active {
+            width: 32px;
+            border-radius: 12px;
+        }
+        
+        .nav-hover:hover {
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .overlay-dark {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 100%);
+        }
+        
+        .btn-dynamic {
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-dynamic:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: flex-start;
+            perspective: 1000px;
+            overflow-x: auto;
+            padding: 20px 140px;
+            max-width: 100%;
+            width: 100%;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+        
+        @media (min-width: 1024px) {
+            .card-container {
+                gap: 15px;
+                padding: 20px 225px;
+                max-width: 650px;
+            }
+        }
+        
+        .card-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .card-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .card-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        
+        .card-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        .main-content {
+            max-width: 500px;
+        }
+        
+        .slide-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        
+        .slide-description {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            max-width: 900px;
+            width: 90%;
+            padding: 2rem;
+            transform: scale(0.95);
+            transition: transform 0.3s ease-out;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="font-sans bg-black overflow-hidden">
+    <!-- Fundo Principal com Slide -->
+    <div id="background-a" class="slide-bg fixed inset-0 z-0"></div>
+    <div id="background-b" class="slide-bg fixed inset-0 z-0" style="opacity: 0;"></div>
+    <div class="overlay-dark fixed inset-0 z-10"></div>
+    <div class="fixed bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black to-transparent z-10 pointer-events-none"></div>
+    
+    <!-- Header -->
+    <header class="relative z-30 flex justify-between items-center p-6 lg:p-8">
+        <div class="flex items-center gap-4 flex-shrink-0">
+            <img src="https://static.wixstatic.com/media/c96204_c7de3e5389fd450b95fdf7a9cbbc7b28~mv2.png" alt="Logo MPAC" class="h-8 lg:h-10">
+        </div>
+
+        <!-- Search Bar -->
+        <div class="flex-grow flex justify-center px-8">
+            <div class="relative w-full max-w-md">
+                <input type="text" id="search-input" placeholder="Buscar por título ou categoria..." class="w-full bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 px-6 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white/50 transition-all">
+                <button id="search-btn" class="absolute top-1/2 right-4 -translate-y-1/2 text-white/60 hover:text-white transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <nav class="hidden md:flex space-x-4 flex-shrink-0">
+            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                <span class="relative z-10">Home</span>
+            </a>
+            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                <span class="relative z-10">Contato</span>
+            </a>
+            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                <span class="relative z-10">Iniciativas</span>
+            </a>
+            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                <span class="relative z-10">FAQ</span>
+            </a>
+        </nav>
+    </header>
+    
+    <!-- Conteúdo Principal -->
+    <div class="relative z-20 min-h-screen flex items-center">
+        <div class="container mx-auto px-6 lg:px-16">
+            <div class="flex flex-col lg:flex-row items-center justify-between">
+                <!-- Área de Conteúdo (Esquerda) -->
+                <div class="lg:w-1/2 mb-8 lg:mb-0">
+                    <div class="main-content">
+                        <div id="content-container">
+                            <!-- Conteúdo será inserido dinamicamente -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Carrossel de Cartões (Direita) e Indicadores -->
+                <div class="w-full lg:w-1/2 flex flex-col items-center lg:items-end mt-8 lg:mt-0">
+                    <div class="card-container" id="image-carousel">
+                        <!-- Cartões serão inseridos dinamicamente -->
+                    </div>
+                    <!-- Indicadores -->
+                    <div class="flex justify-center w-full mt-6">
+                        <div id="indicators" class="flex space-x-3">
+                            <!-- Indicadores serão inseridos dinamicamente -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div id="modal-content" class="modal-content">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-white">
+                <div class="md:col-span-1">
+                    <img id="modal-image" src="" alt="" class="w-full h-auto object-cover rounded-lg shadow-2xl">
+                </div>
+                <div class="md:col-span-2">
+                    <p id="modal-category" class="text-sm uppercase tracking-wider text-white/70 mb-2"></p>
+                    <h2 id="modal-title" class="text-4xl font-serif font-bold mb-4"></h2>
+                    <p id="modal-description" class="text-lg mb-6"></p>
+                    <h3 class="font-bold text-xl mb-3">Mais Informações</h3>
+                    <p class="text-white/80">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+            </div>
+        </div>
+        <button id="modal-close" class="absolute top-8 right-8 text-white text-3xl">&times;</button>
+    </div>
+
+    <script>
+        const slides = [
+            {
+                title: "Inteligência Artificial",
+                description: "Explore como a IA está moldando o futuro, da automação à criatividade, redefinindo os limites da tecnologia.",
+                background: { type: 'image', src: 'https://images.unsplash.com/photo-1677756119517-756a188d2d94?auto=format&fit=crop&w=600&q=80' },
+                cardImages: ["https://images.unsplash.com/photo-1677756119517-756a188d2d94?auto=format&fit=crop&w=600&q=80"],
+                category: "Inovação e Tecnologia"
+            },
+            {
+                title: "Realidade Virtual",
+                description: "Mergulhe em novas realidades. A VR e a RA estão transformando o entretenimento, a educação e a colaboração.",
+                background: { type: 'image', src: 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=2070&q=80' },
+                cardImages: ["https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=600&q=80"],
+                category: "Inovação e Tecnologia"
+            },
+            {
+                title: "Cidades Inteligentes",
+                description: "Descubra como a IoT e a análise de dados estão criando ambientes urbanos mais eficientes, sustentáveis e conectados.",
+                background: { type: 'image', src: 'https://cdn.midjourney.com/01d27591-1c7d-49c9-a41c-54668801ed9a/0_0.png' },
+                cardImages: ["https://cdn.midjourney.com/01d27591-1c7d-49c9-a41c-54668801ed9a/0_0.png"],
+                category: "Inovação na Gestão"
+            },
+            {
+                title: "Biotecnologia",
+                description: "A vanguarda da ciência, onde biologia e tecnologia se encontram para revolucionar a medicina e a agricultura.",
+                background: { type: 'image', src: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=2070&q=80' },
+                cardImages: ["https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=600&q=80"],
+                category: "Inovação na Gestão"
+            },
+            {
+                title: "Energia Renovável",
+                description: "Inovações em energia solar, eólica e outras fontes limpas que pavimentam o caminho para um futuro sustentável.",
+                background: { type: 'image', src: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=2070&q=80' },
+                cardImages: ["https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=600&q=80"],
+                category: "Inovação Social"
+            },
+            {
+                title: "Computação Quântica",
+                description: "O próximo salto na capacidade de processamento, prometendo resolver problemas complexos que hoje são insolúveis.",
+                background: { type: 'image', src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=2070&q=80' },
+                cardImages: ["https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80"],
+                category: "Inovação Social"
+            },
+            {
+                title: "Conectividade Total",
+                description: "A revolução da Internet das Coisas (IoT), impulsionada pela velocidade do 5G, conectando o mundo de formas inéditas.",
+                background: { type: 'image', src: 'https://cdn.midjourney.com/d1066313-e31b-4585-a5d2-d008a0351b34/0_1.png' },
+                cardImages: ["https://cdn.midjourney.com/d1066313-e31b-4585-a5d2-d008a0351b34/0_1.png"],
+                category: "Laboratório de inovação"
+            },
+            {
+                title: "Inovação em Fintech",
+                description: "Como a tecnologia financeira está democratizando o acesso a serviços e criando novas economias digitais.",
+                background: { type: 'image', src: 'https://cdn.midjourney.com/709e5174-59dc-4096-b3a5-371cdbf72708/0_3.png' },
+                cardImages: ["https://cdn.midjourney.com/709e5174-59dc-4096-b3a5-371cdbf72708/0_3.png"],
+                category: "Laboratório de inovação"
+            }
+        ];
+
+        let originalSlides = [...slides];
+        let displayedSlides = [...slides];
+        let currentSlide = 0;
+        let autoSlideInterval;
+        let bgA, bgB, activeBg;
+
+        function initializeSlider() {
+            bgA = document.getElementById('background-a');
+            bgB = document.getElementById('background-b');
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-btn');
+            
+            setSlideBackground(bgA, displayedSlides[0].background);
+            activeBg = bgA;
+
+            renderIndicators();
+            renderImageCards();
+            updateSlide(true); // Marca como inicialização
+            startAutoSlide();
+
+            searchBtn.addEventListener('click', handleSearch);
+            searchInput.addEventListener('input', handleSearch);
+            searchInput.addEventListener('keydown', e => {
+                if (e.key === 'Escape') {
+                    searchInput.value = '';
+                    handleSearch();
+                }
+            });
+            
+            document.getElementById('modal-overlay').addEventListener('click', (e) => {
+                if (e.target.id === 'modal-overlay' || e.target.id === 'modal-close') {
+                    closeModal();
+                }
+            });
+        }
+
+        function renderIndicators() {
+            const indicatorsContainer = document.getElementById('indicators');
+            indicatorsContainer.innerHTML = '';
+            const wineRedColor = 'bg-red-800';
+            
+            displayedSlides.forEach((_, index) => {
+                const indicator = document.createElement('div');
+                indicator.className = `indicator rounded-full ${wineRedColor} cursor-pointer`;
+                indicator.addEventListener('click', () => goToSlide(index));
+                indicatorsContainer.appendChild(indicator);
+            });
+        }
+
+        function renderImageCards() {
+            const carouselContainer = document.getElementById('image-carousel');
+            carouselContainer.innerHTML = '';
+            
+            displayedSlides.forEach((slide, index) => {
+                const card = document.createElement('div');
+                card.className = 'image-card';
+                card.innerHTML = `<img src="${slide.cardImages[0]}" alt="${slide.title}" class="w-full h-full object-cover">`;
+                card.addEventListener('click', () => goToSlide(index));
+                carouselContainer.appendChild(card);
+            });
+
+            carouselContainer.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+            carouselContainer.addEventListener('mouseleave', () => restartAutoSlide());
+        }
+
+        function updateSlide(isInitial = false) {
+            if (displayedSlides.length === 0) return;
+
+            // Atualizar fundo com cross-fade
+            if (!isInitial) {
+                const inactiveBg = (activeBg === bgA) ? bgB : bgA;
+                setSlideBackground(inactiveBg, displayedSlides[currentSlide].background);
+                activeBg.style.opacity = '0';
+                inactiveBg.style.opacity = '1';
+                activeBg = inactiveBg;
+            }
+            
+            // Atualizar conteúdo
+            const contentContainer = document.getElementById('content-container');
+            contentContainer.innerHTML = `
+                <div class="content-slide">
+                    <p class="text-white/80 text-sm font-medium tracking-wider mb-3 uppercase">${displayedSlides[currentSlide].category}</p>
+                    <h1 class="slide-title font-serif font-bold text-white">${displayedSlides[currentSlide].title}</h1>
+                    <p class="slide-description text-white">${displayedSlides[currentSlide].description}</p>
+                    <button class="relative btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-full">
+                        <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                        <span class="relative z-10">Explore Agora</span>
+                    </button>
+                </div>
+            `;
+            
+            // Adicionar evento ao botão Explore Agora
+            contentContainer.querySelector('button').addEventListener('click', () => {
+                openModal(displayedSlides[currentSlide]);
+            });
+
+            // Aplicar animação de entrada
+            setTimeout(() => {
+                const contentSlide = document.querySelector('.content-slide');
+                contentSlide.classList.add('active');
+            }, 100);
+            
+            // Atualizar indicadores
+            updateIndicators();
+            
+            // Atualizar cartões de imagem
+            updateImageCards();
+        }
+
+        function updateIndicators() {
+            if (displayedSlides.length === 0) return;
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.remove('active', 'bg-opacity-100');
+                indicator.classList.add('bg-opacity-40');
+                
+                if (index === currentSlide) {
+                    indicator.classList.add('active');
+                    indicator.classList.remove('bg-opacity-40');
+                    indicator.classList.add('bg-opacity-100');
+                }
+            });
+        }
+
+        function updateImageCards() {
+            if (displayedSlides.length === 0) return;
+            const cards = document.querySelectorAll('.image-card');
+            const container = document.getElementById('image-carousel');
+            
+            cards.forEach((card, index) => {
+                card.classList.remove('active', 'inactive');
+                
+                if (index === currentSlide) {
+                    card.classList.add('active');
+                    // Scroll suave para centralizar o cartão ativo
+                    setTimeout(() => {
+                        const containerRect = container.getBoundingClientRect();
+                        const cardRect = card.getBoundingClientRect();
+                        const scrollLeft = card.offsetLeft - (containerRect.width / 2) + (cardRect.width / 2);
+                        container.scrollTo({
+                            left: scrollLeft,
+                            behavior: 'smooth'
+                        });
+                    }, 100);
+                } else {
+                    card.classList.add('inactive');
+                }
+            });
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlide();
+            restartAutoSlide();
+        }
+
+        function nextSlide() {
+            if (displayedSlides.length === 0) return;
+            currentSlide = (currentSlide + 1) % displayedSlides.length;
+            updateSlide();
+        }
+
+        function prevSlide() {
+            if (displayedSlides.length === 0) return;
+            currentSlide = (currentSlide - 1 + displayedSlides.length) % displayedSlides.length;
+            updateSlide();
+        }
+
+        function startAutoSlide() {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = setInterval(nextSlide, 4000);
+        }
+
+        function restartAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+        function openModal(slide) {
+            const overlay = document.getElementById('modal-overlay');
+            document.getElementById('modal-image').src = slide.cardImages[0];
+            document.getElementById('modal-category').textContent = slide.category;
+            document.getElementById('modal-title').textContent = slide.title;
+            document.getElementById('modal-description').textContent = slide.description;
+            overlay.classList.add('active');
+            clearInterval(autoSlideInterval); // Pausa o slide show
+        }
+
+        function closeModal() {
+            const overlay = document.getElementById('modal-overlay');
+            overlay.classList.remove('active');
+            startAutoSlide(); // Retoma o slide show
+        }
+
+        function setSlideBackground(element, background) {
+            element.innerHTML = '';
+            element.style.backgroundImage = 'none';
+
+            if (background.type === 'video') {
+                const video = document.createElement('video');
+                video.className = 'w-full h-full object-cover';
+                video.autoplay = true;
+                video.muted = true;
+                video.loop = true;
+                video.playsInline = true;
+
+                const source = document.createElement('source');
+                source.src = background.src;
+                source.type = 'video/mp4';
+
+                video.appendChild(source);
+                element.appendChild(video);
+            } else {
+                element.style.backgroundImage = `url('${background.src}')`;
+            }
+        }
+
+        function handleSearch() {
+            const searchInput = document.getElementById('search-input');
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            clearInterval(autoSlideInterval);
+
+            if (searchTerm === '') {
+                displayedSlides = [...originalSlides];
+            } else {
+                displayedSlides = originalSlides.filter(slide => 
+                    slide.title.toLowerCase().includes(searchTerm) || 
+                    slide.category.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            currentSlide = 0;
+
+            if (displayedSlides.length === 0) {
+                const contentContainer = document.getElementById('content-container');
+                contentContainer.innerHTML = `
+                    <div class="content-slide active">
+                        <h1 class="slide-title font-serif font-bold text-white">Nenhum resultado</h1>
+                        <p class="slide-description text-white">Não encontramos nada para "${searchInput.value}". Tente uma nova busca.</p>
+                    </div>
+                `;
+                document.getElementById('image-carousel').innerHTML = '';
+                document.getElementById('indicators').innerHTML = '';
+                bgA.style.backgroundImage = '';
+                bgA.innerHTML = '';
+                bgB.style.backgroundImage = '';
+                bgB.innerHTML = '';
+                return;
+            }
+
+            renderIndicators();
+            renderImageCards();
+            updateSlide();
+            startAutoSlide();
+        }
+
+        // Controle por teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+                restartAutoSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+                restartAutoSlide();
+            }
+        });
+
+        // Inicializar slider
+        initializeSlider();
+    </script>
+</body>
+</html>
