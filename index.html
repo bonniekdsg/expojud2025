@@ -145,16 +145,42 @@
             max-width: 500px;
         }
         
+        /*
+        @media (min-width: 1024px) and (max-width: 1440px) {
+            .slide-title {
+                font-size: clamp(2.2rem, 5vw, 3.2rem);
+            }
+            .slide-description {
+                font-size: 1rem;
+                margin-bottom: 24px;
+            }
+            .main-content {
+                max-width: 420px;
+            }
+        }
+        */
+
+        @media (min-width: 1024px) {
+            .slide-title { font-size: clamp(2.5rem, 4vw, 3.5rem); }
+            .slide-description { font-size: 1.1rem; }
+            .main-content { max-width: 450px; }
+        }
+
+        @media (min-width: 1440px) {
+            .slide-title { font-size: clamp(3.5rem, 5vw, 4.5rem); }
+            .main-content { max-width: 500px; }
+        }
+        
         .slide-title {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-size: clamp(2rem, 6vw, 3rem);
             line-height: 1.1;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
         
         .slide-description {
-            font-size: 1.125rem;
+            font-size: 1rem;
             line-height: 1.6;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
             opacity: 0.9;
         }
 
@@ -180,13 +206,44 @@
         .modal-content {
             max-width: 900px;
             width: 90%;
-            padding: 2rem;
+            padding: 1.5rem;
             transform: scale(0.95);
             transition: transform 0.3s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
+            scrollbar-width: none; /* Firefox */
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+        .modal-content::-webkit-scrollbar {
+            display: none; /* Safari and Chrome */
+        }
+        @media (min-width: 768px) {
+            .modal-content {
+                padding: 2.5rem;
+            }
         }
 
         .modal-overlay.active .modal-content {
             transform: scale(1);
+            animation: modal-enter 250ms ease-out;
+        }
+
+        @keyframes modal-enter {
+            from { opacity: 0; transform: translateY(8px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Imagem do modal responsiva */
+        #modal-image {
+            max-height: 40vh;
+        }
+        @media (min-width: 768px) {
+            #modal-image { max-height: 70vh; }
         }
     </style>
 </head>
@@ -200,11 +257,11 @@
     <!-- Header -->
     <header class="relative z-30 flex justify-between items-center p-6 lg:p-8">
         <div class="flex items-center gap-4 flex-shrink-0">
-            <img src="https://static.wixstatic.com/media/c96204_c7de3e5389fd450b95fdf7a9cbbc7b28~mv2.png" alt="Logo MPAC" class="h-8 lg:h-10">
+            <img src="https://static.wixstatic.com/media/c96204_a9ec9c9e274d4e598cb7fdd96b2c42cb~mv2.png" alt="Logo MPAC" class="h-8 lg:h-10">
         </div>
 
-        <!-- Search Bar -->
-        <div class="flex-grow flex justify-center px-8">
+        <!-- Desktop Search Bar -->
+        <div class="hidden md:flex flex-grow justify-center px-8">
             <div class="relative w-full max-w-md">
                 <input type="text" id="search-input" placeholder="Buscar por título ou categoria..." class="w-full bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 px-6 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white/50 transition-all">
                 <button id="search-btn" class="absolute top-1/2 right-4 -translate-y-1/2 text-white/60 hover:text-white transition">
@@ -215,25 +272,65 @@
             </div>
         </div>
         
-        <nav class="hidden md:flex space-x-4 flex-shrink-0">
-            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
-                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
-                <span class="relative z-10">Home</span>
-            </a>
-            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
-                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
-                <span class="relative z-10">Contato</span>
-            </a>
-            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
-                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
-                <span class="relative z-10">Iniciativas</span>
-            </a>
-            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
-                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
-                <span class="relative z-10">Expojud25</span>
-            </a>
-        </nav>
+        <div class="flex items-center space-x-2">
+            <nav class="hidden md:flex space-x-4 flex-shrink-0">
+                <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+                    <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                    <span class="relative z-10">Home</span>
+                </a>
+                <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+                    <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                    <span class="relative z-10">Contato</span>
+                </a>
+                <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+                    <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                    <span class="relative z-10">Iniciativas</span>
+                </a>
+            </nav>
+    
+            <!-- Mobile Search Icon -->
+            <button id="mobile-search-open-btn" class="md:hidden text-white p-2 z-50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </button>
+    
+            <!-- Hamburger Button -->
+            <div class="md:hidden flex items-center">
+                <button id="hamburger-btn" class="text-white focus:outline-none z-50">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
     </header>
+
+    <!-- Mobile Search Overlay -->
+    <div id="mobile-search-overlay" class="hidden fixed inset-0 bg-black/95 z-50 p-4 pt-6 flex flex-col items-center transition-opacity duration-300 ease-in-out">
+        <button id="mobile-search-close-btn" class="absolute top-6 right-6 text-white">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="w-full max-w-md mt-16">
+            <div class="relative">
+                <input type="text" id="mobile-search-input" placeholder="Buscar por título ou categoria..." class="w-full bg-white/10 border border-white/20 text-white px-6 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white/50">
+                <button id="mobile-search-execute-btn" class="absolute top-1/2 right-4 -translate-y-1/2 text-white/60">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-black/95 backdrop-blur-md z-40 transition-opacity duration-300 ease-in-out">
+        <div class="flex flex-col items-center justify-center h-full">
+            <nav class="flex flex-col items-center space-y-8">
+                <a href="#" class="text-white text-3xl font-medium hover:text-red-500 transition-colors">Home</a>
+                <a href="#" class="text-white text-3xl font-medium hover:text-red-500 transition-colors">Contato</a>
+                <a href="#" class="text-white text-3xl font-medium hover:text-red-500 transition-colors">Iniciativas</a>
+            </nav>
+        </div>
+    </div>
     
     <!-- Conteúdo Principal -->
     <div class="relative z-20 min-h-screen flex items-center">
@@ -266,80 +363,120 @@
 
     <!-- Modal de Detalhes -->
     <div id="modal-overlay" class="modal-overlay">
-        <div id="modal-content" class="modal-content">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-white">
+        <div id="modal-content" class="modal-content" role="dialog" aria-modal="true">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 text-white">
                 <div class="md:col-span-1">
                     <img id="modal-image" src="" alt="" class="w-full h-auto object-cover rounded-lg shadow-2xl">
                 </div>
                 <div class="md:col-span-2">
-                    <p id="modal-category" class="text-sm uppercase tracking-wider text-white/70 mb-2"></p>
-                    <h2 id="modal-title" class="text-4xl font-serif font-bold mb-4"></h2>
-                    <p id="modal-description" class="text-lg mb-6"></p>
-                    <h3 class="font-bold text-xl mb-3">Mais Informações</h3>
-                    <p class="text-white/80">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <p id="modal-category" class="text-xs md:text-sm uppercase tracking-wider text-white/70 mb-2"></p>
+                    <h2 id="modal-title" class="text-2xl md:text-4xl font-serif font-bold mb-3 md:mb-4"></h2>
+                    <p id="modal-description" class="text-base md:text-lg mb-4 md:mb-6"></p>
+                    <h3 class="font-bold text-lg md:text-xl mb-2 md:mb-3">Mais Informações</h3>
+                    <p class="text-sm md:text-base text-white/80">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                 </div>
             </div>
         </div>
-        <button id="modal-close" class="absolute top-8 right-8 text-white text-3xl">&times;</button>
+        <button id="modal-close" class="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-2xl" aria-label="Fechar modal">&times;</button>
     </div>
 
     <script>
         const slides = [
+            // Inovação na Gestão
             {
-                title: "Inteligência Artificial",
-                description: "Explore como a IA está moldando o futuro, da automação à criatividade, redefinindo os limites da tecnologia.",
-                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_142c1a172d814c76bb94e88e41190cc1~mv2.png' },
-                cardImages: ["https://images.unsplash.com/photo-1677756119517-756a188d2d94?auto=format&fit=crop&w=600&q=80"],
-                category: "Inovação e Tecnologia"
-            },
-            {
-                title: "Realidade Virtual",
-                description: "Mergulhe em novas realidades. A VR e a RA estão transformando o entretenimento, a educação e a colaboração.",
-                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_35026b1459c24a93abf9925f26110c04~mv2.png' },
-                cardImages: ["https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=600&q=80"],
-                category: "Inovação e Tecnologia"
-            },
-            {
-                title: "Cidades Inteligentes",
-                description: "Descubra como a IoT e a análise de dados estão criando ambientes urbanos mais eficientes, sustentáveis e conectados.",
-                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_6748391d2dee456190af90bfe76e6a0d~mv2.png' },
-                cardImages: ["https://cdn.midjourney.com/01d27591-1c7d-49c9-a41c-54668801ed9a/0_0.png"],
+                title: "Observatório de Políticas Públicas - OPP",
+                description: "Uma plataforma para monitoramento e análise de políticas públicas, promovendo transparência e controle social.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_134de0e8ab3d4ee6894c4ad5edcc8be0~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_134de0e8ab3d4ee6894c4ad5edcc8be0~mv2.avif"],
                 category: "Inovação na Gestão"
             },
             {
-                title: "Biotecnologia",
-                description: "A vanguarda da ciência, onde biologia e tecnologia se encontram para revolucionar a medicina e a agricultura.",
-                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_ef2f36f8d2824b359f113edc27e7b8c1~mv2.png' },
-                cardImages: ["https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=600&q=80"],
+                title: "Ação Impacto",
+                description: "Método inovador de seleção de projetos no MPAC, focado em maximizar o impacto social positivo das iniciativas.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif"],
                 category: "Inovação na Gestão"
             },
             {
-                title: "Energia Renovável",
-                description: "Inovações em energia solar, eólica e outras fontes limpas que pavimentam o caminho para um futuro sustentável.",
-                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_da8abe2e04724526991808f4dc42d551~mv2.png' },
-                cardImages: ["https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=600&q=80"],
+                title: "Investigador Cidadão",
+                description: "Capacita cidadãos para atuarem como agentes de fiscalização, fortalecendo a cidadania ativa e a gestão pública.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_1d6cf800ed19458bad28680700340fdc~mv2.jpg' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_1d6cf800ed19458bad28680700340fdc~mv2.jpg"],
+                category: "Inovação na Gestão"
+            },
+            // Inovação Social
+            {
+                title: "TEA - Eles não estão Sós",
+                description: "Projeto de apoio e inclusão para pessoas com Transtorno do Espectro Autista e suas famílias.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif"],
                 category: "Inovação Social"
             },
             {
-                title: "Computação Quântica",
-                description: "O próximo salto na capacidade de processamento, prometendo resolver problemas complexos que hoje são insolúveis.",
-                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_ee97e775b10d493888a9cf2e29d4d165~mv2.png' },
-                cardImages: ["https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80"],
+                title: "Destine e Proteja",
+                description: "Iniciativa que incentiva a destinação de parte do Imposto de Renda para fundos de proteção à criança e ao adolescente.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif"],
                 category: "Inovação Social"
             },
             {
-                title: "Conectividade Total",
-                description: "A revolução da Internet das Coisas (IoT), impulsionada pela velocidade do 5G, conectando o mundo de formas inéditas.",
-                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_922bf8738e474144970f6aa3c8963087~mv2.png' },
-                cardImages: ["https://cdn.midjourney.com/d1066313-e31b-4585-a5d2-d008a0351b34/0_1.png"],
-                category: "Laboratório de inovação"
+                title: "Justiça de Gênero",
+                description: "O direito à informação que salva vidas, combatendo a violência de gênero através da conscientização e do acesso à justiça.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif"],
+                category: "Inovação Social"
             },
             {
-                title: "Inovação em Fintech",
-                description: "Como a tecnologia financeira está democratizando o acesso a serviços e criando novas economias digitais.",
-                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_0dd9f050b21a4373a002efc460e4f128~mv2.png' },
-                cardImages: ["https://cdn.midjourney.com/709e5174-59dc-4096-b3a5-371cdbf72708/0_3.png"],
-                category: "Laboratório de inovação"
+                title: "Merenda Escolar Regional",
+                description: "Fornecimento de produtos regionais para merenda escolar, valorizando agricultores familiares e a nutrição dos alunos.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif"],
+                category: "Inovação Social"
+            },
+            // Inovação Tecnológica
+            {
+                title: "SIGE",
+                description: "Sistema Integrado de Gestão Estratégica que otimiza processos e a tomada de decisões no setor público.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_f6fe012fbf7642f2b8d14aaac87453e2~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_f6fe012fbf7642f2b8d14aaac87453e2~mv2.avif"],
+                category: "Inovação Tecnológica"
+            },
+            {
+                title: "Radar de Enchentes do MPAC",
+                description: "Ferramenta tecnológica de monitoramento e alerta precoce para áreas de risco de enchentes.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_9e34639d95c44f179ab5d084678976bf~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_9e34639d95c44f179ab5d084678976bf~mv2.avif"],
+                category: "Inovação Tecnológica"
+            },
+            {
+                title: "Feminicidômetro",
+                description: "Sistema de coleta e análise de dados sobre feminicídios para subsidiar políticas de prevenção e combate.",
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/ee428781-517f-453a-bbda-0784e7199b6c/1.mp4' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_e989c57377f04079bea24671e60c7bc4~mv2.jpg"],
+                category: "Inovação Tecnológica"
+            },
+            {
+                title: "ComparaAI",
+                description: "Inteligência Artificial para análise comparativa de documentos e processos, agilizando o trabalho jurídico e administrativo.",
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/44f0f7e3-f962-4517-a6e8-b147fe054d32/0.mp4' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_44e053de6b894422899c6fa181c0229e~mv2.avif"],
+                category: "Inovação Tecnológica"
+            },
+            // Laboratório de Inovação
+            {
+                title: "SeringalLab",
+                description: "Laboratório de inovação do MPAC, um espaço para experimentação e desenvolvimento de soluções criativas para a justiça.",
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/c29365fc-32eb-4597-afac-7b2cbf93ec33/1.mp4' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_574c631197124f51a43e57f1dfc33960~mv2.avif"],
+                category: "Laboratório de Inovação"
+            },
+            // Ensino
+            {
+                title: "LEAAM",
+                description: "Laboratório de Estágio em Apoio à Atividade Ministerial, unindo academia e prática para formar futuros profissionais do direito.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif"],
+                category: "Ensino"
             }
         ];
 
@@ -363,12 +500,15 @@
             updateSlide(true); // Marca como inicialização
             startAutoSlide();
 
-            searchBtn.addEventListener('click', handleSearch);
-            searchInput.addEventListener('input', handleSearch);
+            const desktopSearch = () => {
+                performSearchLogic(searchInput.value.toLowerCase().trim(), searchInput.value);
+            };
+            searchBtn.addEventListener('click', desktopSearch);
+            searchInput.addEventListener('input', desktopSearch);
             searchInput.addEventListener('keydown', e => {
                 if (e.key === 'Escape') {
                     searchInput.value = '';
-                    handleSearch();
+                    desktopSearch();
                 }
             });
             
@@ -427,7 +567,7 @@
                     <p class="text-sm font-medium tracking-wider mb-3 uppercase" style="color: #ff4c4c;">${displayedSlides[currentSlide].category}</p>
                     <h1 class="slide-title font-serif font-bold text-white">${displayedSlides[currentSlide].title}</h1>
                     <p class="slide-description text-white">${displayedSlides[currentSlide].description}</p>
-                    <button class="relative btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-full">
+                    <button class="relative btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 lg:px-8 lg:py-4 rounded-full text-sm lg:text-base">
                         <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
                         <span class="relative z-10">Explore Agora</span>
                     </button>
@@ -529,12 +669,16 @@
             document.getElementById('modal-description').textContent = slide.description;
             overlay.classList.add('active');
             clearInterval(autoSlideInterval); // Pausa o slide show
+            document.body.style.overflow = 'hidden';
+            const closeBtn = document.getElementById('modal-close');
+            closeBtn.focus();
         }
 
         function closeModal() {
             const overlay = document.getElementById('modal-overlay');
             overlay.classList.remove('active');
             startAutoSlide(); // Retoma o slide show
+            document.body.style.overflow = '';
         }
 
         function setSlideBackground(element, background) {
@@ -560,9 +704,7 @@
             }
         }
 
-        function handleSearch() {
-            const searchInput = document.getElementById('search-input');
-            const searchTerm = searchInput.value.toLowerCase().trim();
+        function performSearchLogic(searchTerm, rawQuery) {
             clearInterval(autoSlideInterval);
 
             if (searchTerm === '') {
@@ -581,7 +723,7 @@
                 contentContainer.innerHTML = `
                     <div class="content-slide active">
                         <h1 class="slide-title font-serif font-bold text-white">Nenhum resultado</h1>
-                        <p class="slide-description text-white">Não encontramos nada para "${searchInput.value}". Tente uma nova busca.</p>
+                        <p class="slide-description text-white">Não encontramos nada para "${rawQuery}". Tente uma nova busca.</p>
                     </div>
                 `;
                 document.getElementById('image-carousel').innerHTML = '';
@@ -607,11 +749,92 @@
             } else if (e.key === 'ArrowLeft') {
                 prevSlide();
                 restartAutoSlide();
+            } else if (e.key === 'Escape') {
+                const overlay = document.getElementById('modal-overlay');
+                if (overlay.classList.contains('active')) {
+                    closeModal();
+                }
             }
         });
 
         // Inicializar slider
         initializeSlider();
+
+        // Mobile Menu Logic
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mainContent = document.querySelector('.relative.z-20');
+
+        let isMenuOpen = false;
+
+        const openIcon = `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>`;
+        const closeIcon = `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+
+        hamburgerBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            mobileMenu.classList.toggle('hidden');
+            
+            if (isMenuOpen) {
+                hamburgerBtn.innerHTML = closeIcon;
+                mainContent.style.filter = 'blur(5px)';
+            } else {
+                hamburgerBtn.innerHTML = openIcon;
+                mainContent.style.filter = 'none';
+            }
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.add('hidden');
+                hamburgerBtn.innerHTML = openIcon;
+                mainContent.style.filter = 'none';
+            });
+        });
+
+        // Mobile Search Overlay Logic
+        const mobileSearchOpenBtn = document.getElementById('mobile-search-open-btn');
+        const mobileSearchCloseBtn = document.getElementById('mobile-search-close-btn');
+        const mobileSearchOverlay = document.getElementById('mobile-search-overlay');
+        const mobileSearchInput = document.getElementById('mobile-search-input');
+        const mobileSearchExecuteBtn = document.getElementById('mobile-search-execute-btn');
+
+        let isMobileSearchOpen = false;
+
+        mobileSearchOpenBtn.addEventListener('click', () => {
+            isMobileSearchOpen = true;
+            mobileSearchOverlay.classList.remove('hidden');
+            mobileSearchInput.focus();
+        });
+
+        mobileSearchCloseBtn.addEventListener('click', () => {
+            isMobileSearchOpen = false;
+            mobileSearchOverlay.classList.add('hidden');
+            mobileSearchInput.value = '';
+        });
+
+        mobileSearchInput.addEventListener('input', () => {
+            if (mobileSearchInput.value.length > 0) {
+                mobileSearchExecuteBtn.classList.remove('text-white/60');
+                mobileSearchExecuteBtn.classList.add('text-white');
+            } else {
+                mobileSearchExecuteBtn.classList.remove('text-white');
+                mobileSearchExecuteBtn.classList.add('text-white/60');
+            }
+        });
+
+        const mobileSearch = () => {
+            performSearchLogic(mobileSearchInput.value.toLowerCase().trim(), mobileSearchInput.value);
+            isMobileSearchOpen = false;
+            mobileSearchOverlay.classList.add('hidden');
+        };
+
+        mobileSearchExecuteBtn.addEventListener('click', mobileSearch);
+        mobileSearchInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                mobileSearch();
+            }
+        });
     </script>
 </body>
 </html>
