@@ -273,20 +273,20 @@
         </div>
         
         <div class="flex items-center space-x-2">
-            <nav class="hidden md:flex space-x-4 flex-shrink-0">
-                <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
-                    <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
-                    <span class="relative z-10">Home</span>
-                </a>
-                <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
-                    <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
-                    <span class="relative z-10">Contato</span>
-                </a>
-                <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
-                    <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
-                    <span class="relative z-10">Iniciativas</span>
-                </a>
-            </nav>
+        <nav class="hidden md:flex space-x-4 flex-shrink-0">
+            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                <span class="relative z-10">Home</span>
+            </a>
+            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                <span class="relative z-10">Contato</span>
+            </a>
+            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                <span class="relative z-10">Iniciativas</span>
+            </a>
+        </nav>
     
             <!-- Mobile Search Icon -->
             <button id="mobile-search-open-btn" class="md:hidden text-white p-2 z-50">
@@ -364,16 +364,13 @@
     <!-- Modal de Detalhes -->
     <div id="modal-overlay" class="modal-overlay">
         <div id="modal-content" class="modal-content" role="dialog" aria-modal="true">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 text-white">
-                <div class="md:col-span-1">
-                    <img id="modal-image" src="" alt="" class="w-full h-auto object-cover rounded-lg shadow-2xl">
-                </div>
-                <div class="md:col-span-2">
+            <div class="grid grid-cols-1 gap-4 md:gap-8 text-white">
+                <div>
                     <p id="modal-category" class="text-xs md:text-sm uppercase tracking-wider text-white/70 mb-2"></p>
                     <h2 id="modal-title" class="text-2xl md:text-4xl font-serif font-bold mb-3 md:mb-4"></h2>
                     <p id="modal-description" class="text-base md:text-lg mb-4 md:mb-6"></p>
                     <h3 class="font-bold text-lg md:text-xl mb-2 md:mb-3">Mais Informações</h3>
-                    <p class="text-sm md:text-base text-white/80">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <div id="modal-more" class="text-sm md:text-base text-white/80"></div>
                 </div>
             </div>
         </div>
@@ -386,8 +383,8 @@
             {
                 title: "Observatório de Políticas Públicas - OPP",
                 description: "Uma plataforma para monitoramento e análise de políticas públicas, promovendo transparência e controle social.",
-                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_134de0e8ab3d4ee6894c4ad5edcc8be0~mv2.avif' },
-                cardImages: ["https://static.wixstatic.com/media/c96204_134de0e8ab3d4ee6894c4ad5edcc8be0~mv2.avif"],
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/8ccdd0f8-9c47-4506-ad15-f76cc42b62ad/1.mp4' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_256019608c3c43eab84d0d8509e679b5~mv2.avif"],
                 category: "Inovação na Gestão"
             },
             {
@@ -400,7 +397,7 @@
             {
                 title: "Investigador Cidadão",
                 description: "Capacita cidadãos para atuarem como agentes de fiscalização, fortalecendo a cidadania ativa e a gestão pública.",
-                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_1d6cf800ed19458bad28680700340fdc~mv2.jpg' },
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/aad060b2-509e-4fc3-9068-6618cf41e2ca/0.mp4' },
                 cardImages: ["https://static.wixstatic.com/media/c96204_1d6cf800ed19458bad28680700340fdc~mv2.jpg"],
                 category: "Inovação na Gestão"
             },
@@ -429,15 +426,15 @@
             {
                 title: "Merenda Escolar Regional",
                 description: "Fornecimento de produtos regionais para merenda escolar, valorizando agricultores familiares e a nutrição dos alunos.",
-                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif' },
-                cardImages: ["https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif"],
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/282d6d78-7e24-4b78-ba58-17a1f4636a26/1.mp4' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_24956ccb0af8476484e738b040b80615~mv2.avif"],
                 category: "Inovação Social"
             },
             // Inovação Tecnológica
             {
                 title: "SIGE",
                 description: "Sistema Integrado de Gestão Estratégica que otimiza processos e a tomada de decisões no setor público.",
-                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_f6fe012fbf7642f2b8d14aaac87453e2~mv2.avif' },
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/3eef4f63-17d0-4ed5-9a19-4b923b3f6c14/0.mp4' },
                 cardImages: ["https://static.wixstatic.com/media/c96204_f6fe012fbf7642f2b8d14aaac87453e2~mv2.avif"],
                 category: "Inovação Tecnológica"
             },
@@ -663,10 +660,26 @@
 
         function openModal(slide) {
             const overlay = document.getElementById('modal-overlay');
-            document.getElementById('modal-image').src = slide.cardImages[0];
             document.getElementById('modal-category').textContent = slide.category;
             document.getElementById('modal-title').textContent = slide.title;
             document.getElementById('modal-description').textContent = slide.description;
+
+            const moreInfoEl = document.getElementById('modal-more');
+            const defaultMore = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`;
+            if (slide.title === 'Observatório de Políticas Públicas - OPP') {
+                moreInfoEl.innerHTML = `
+                    <p class="mb-3">O Observatório de Políticas Públicas (OPP) do Ministério Público do Estado do Acre (MPAC) representa uma inovação significativa no acompanhamento da gestão pública no estado. Criado em 2024, o OPP se destaca pela sua contribuição para a transparência e o controle social, monitorando a execução de políticas públicas de acordo com o Plano Plurianual (PPA), a Lei de Diretrizes Orçamentárias (LDO) e a Lei Orçamentária Anual (LOA).</p>
+                    <p class="mb-4"><strong>Setor responsável</strong>: Núcleo de Apoio Técnico (NAT)</p>
+                    <a href="https://nat.mpac.mp.br/observatorio-de-politicas-publicas/" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
+                        <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                        <span class="relative z-10">Acessar OPP</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </a>
+                `;
+            } else {
+                moreInfoEl.textContent = defaultMore;
+            }
+
             overlay.classList.add('active');
             clearInterval(autoSlideInterval); // Pausa o slide show
             document.body.style.overflow = 'hidden';
