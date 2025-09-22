@@ -802,6 +802,24 @@
       </svg>
     </a>
   `;
+   } else if (slide.title === 'ComparaAI') {
+  moreInfoEl.innerHTML = `
+    <p class="mb-3">A ferramenta <strong>ComparaAI</strong> é uma solução de ponta para comparação facial, desenvolvida com base no robusto framework DeepFace. Ela oferece diversos modelos de redes neurais pré-treinadas, garantindo análises precisas e eficientes.</p>
+
+    <p class="mb-3">Com o ComparaAI, a comparação de rostos vai além da simples identificação, fornecendo resultados detalhados em porcentagem. A ferramenta também é capaz de estimar a idade, a etnia predominante e outras características, eliminando a subjetividade da análise humana.</p>
+
+    <p class="mb-4">Ao fornecer dados objetivos e valores de certeza, o ComparaAI capacita os analistas, otimizando o processo de avaliação e garantindo maior confiabilidade nos resultados.</p>
+
+    <p class="mb-4"><strong>Setor responsável</strong>: Núcleo de Apoio Técnico (NAT)</p>
+    <a href="https://sigep.mpac.mp.br/" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
+      <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+      <span class="relative z-10">Acessar Sistema</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+    </a>
+   
+  `;
 
   } else {
     moreInfoEl.textContent = defaultMore;
