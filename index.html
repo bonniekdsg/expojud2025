@@ -740,6 +740,23 @@
 
     <p class="mb-4"><strong>Setor responsável</strong>: Observatório de Violência de Gênero (OBSGênero)</p>
   `;
+} else if (slide.title === 'Merenda Escolar Regional') {
+  moreInfoEl.innerHTML = `
+    <p class="mb-3">Iniciativa do Ministério Público do Estado do Acre, em parceria com o CECANE/UFAC, secretarias públicas e organizações comunitárias, o projeto nasceu para garantir o cumprimento da lei que exige a aplicação de pelo menos 30% dos recursos do PNAE na compra de alimentos da agricultura familiar.</p>
+
+    <p class="mb-3">A ação promoveu oficinas, visitas técnicas e escutas comunitárias, incentivando a participação de pequenos agricultores no fornecimento da merenda escolar, substituindo alimentos ultraprocessados por produtos frescos e regionais. O impacto foi duplo: melhoria da qualidade nutricional oferecida aos estudantes e fortalecimento da economia local, especialmente de comunidades indígenas, ribeirinhas, extrativistas e de assentamento.</p>
+
+    <p class="mb-4">Com resultados já visíveis, o projeto se consolidou como uma experiência de justiça social e segurança alimentar, unindo inclusão produtiva, valorização cultural e desenvolvimento sustentável no Alto Juruá.</p>
+
+    <p class="mb-4"><strong>Setor responsável</strong>: Promotoria de Justiça de Defesa da Criança e do Adolescente de Cruzeiro do Sul</p>
+    <a href="https://bancodeprojetos.cnmp.mp.br/Detalhe?idProjeto=4222" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
+      <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+      <span class="relative z-10">Acessar Projeto</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+    </a>
+  `;    
 
   } else {
     moreInfoEl.textContent = defaultMore;
