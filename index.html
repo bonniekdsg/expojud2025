@@ -699,6 +699,21 @@
         </svg>
       </a>
     `;
+else if (slide.title === 'TEA - Eles não estão Sós') {
+  moreInfoEl.innerHTML = `
+    <p class="mb-3">O Ministério Público do Estado do Acre (MPAC) desenvolveu o projeto para enfrentar a falta de dados e de políticas públicas estruturadas voltadas às pessoas com Transtorno do Espectro Autista (TEA). A iniciativa realizou um amplo diagnóstico por município, mapeando serviços e identificando realidades sociais, econômicas e familiares, o que permitiu orientar intervenções mais qualificadas.</p>
+    <p class="mb-3">Com base nesse levantamento, o MPAC articulou 352 pactuações interinstitucionais, promoveu rodas de conversa, oficinas regionais e visitas técnicas, além de produzir materiais de conscientização e capacitação. Os resultados já incluem avanços concretos, como a implantação do CER II no Alto Acre e a criação de um centro de referência em terapias em Tarauacá, reafirmando o compromisso do MPAC com a inclusão, a dignidade e a efetivação de direitos.</p>
+    <p class="mb-4"><strong>Setor responsável</strong>: Centro de Apoio Operacional de defesa da Saúde, Pessoas Idosa e Pessoa com Deficiência (CAOP SAUDE – DI)</p>
+    <a href="https://bancodeprojetos.cnmp.mp.br/Detalhe?idProjeto=3910" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
+      <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+      <span class="relative z-10">Acessar Projeto</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+    </a>
+  `;
+}
+
   } else {
     moreInfoEl.textContent = defaultMore;
   }
