@@ -818,8 +818,21 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
       </svg>
     </a>
-   
-  `;
+   `;
+     } else if (slide.title === 'SeringalLab') {
+  moreInfoEl.innerHTML = `
+    <p class="mb-3">O <strong>SeringalLab</strong> é o laboratório de inovação do Ministério Público do Estado do Acre (MPAC). Constitui-se como um espaço dinâmico de experimentação e cocriação, voltado ao desenvolvimento de ideias, métodos e tecnologias capazes de transformar a cultura organizacional e oferecer soluções concretas para os desafios do serviço público.</p>
+
+    <p class="mb-4"><strong>Setor responsável</strong>: Secretaria de Planejamento Institucional e Inovação</p>
+    <a href="https://seringallab.mpac.mp.br/#inicio" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
+      <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+      <span class="relative z-10">Acessar SeringalLab</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+    </a>
+
+   `;
 
   } else {
     moreInfoEl.textContent = defaultMore;
