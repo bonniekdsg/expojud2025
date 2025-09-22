@@ -9,68 +9,293 @@
     <style>
         .font-serif { font-family: 'Playfair Display', serif; }
         .font-sans { font-family: 'Inter', sans-serif; }
-        .slide-bg { background-size: cover; background-position: center; background-repeat: no-repeat; transition: opacity 1s ease-in-out; }
-        .content-slide { opacity: 0; transition: opacity 0.8s ease-out; }
-        .content-slide.active { opacity: 1; }
-        .image-card { transition: all 0.6s cubic-bezier(0.25,0.46,0.45,0.94); cursor: pointer; border-radius: 20px; overflow: hidden; width: 140px; height: 180px; border: 2px solid transparent; flex-shrink: 0; }
-        .image-card.active { width: 180px; height: 230px; border: 3px solid white; transform: scale(1.05); z-index: 10; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
-        .image-card.inactive { opacity: 0.7; transform: scale(0.95); }
-        .image-card:hover { transform: scale(1.12); z-index: 20; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        @media (min-width:1024px){ .image-card{width:160px;height:200px} .image-card.active{width:200px;height:250px;transform:scale(1.1)}}
-        .indicator{transition:all .4s ease;width:8px;height:8px}
-        .indicator.active{width:32px;border-radius:12px}
-        .nav-hover:hover{opacity:.8;transition:opacity .3s ease}
-        .overlay-dark{background:linear-gradient(135deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.2) 100%)}
-        .btn-dynamic{border-radius:8px;font-weight:600;letter-spacing:.5px}
-        .btn-dynamic:hover{transform:translateY(-1px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
-        .card-container{display:flex;gap:12px;align-items:center;justify-content:flex-start;perspective:1000px;overflow-x:auto;padding:20px 140px;max-width:100%;width:100%;scrollbar-width:none;-ms-overflow-style:none}
-        @media (min-width:1024px){.card-container{gap:15px;padding:20px 225px;max-width:650px}}
-        .card-container::-webkit-scrollbar{display:none}
-        .main-content{max-width:500px}
-        @media (min-width:1024px){.slide-title{font-size:clamp(2.5rem,4vw,3.5rem)}.slide-description{font-size:1.1rem}.main-content{max-width:450px}}
-        @media (min-width:1440px){.slide-title{font-size:clamp(3.5rem,5vw,4.5rem)}.main-content{max-width:500px}}
-        .slide-title{font-size:clamp(2rem,6vw,3rem);line-height:1.1;margin-bottom:20px}
-        .slide-description{font-size:1rem;line-height:1.6;margin-bottom:28px;opacity:.9}
-        .modal-overlay{position:fixed;inset:0;background-color:rgba(0,0,0,.7);backdrop-filter:blur(8px);z-index:40;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease-out}
-        .modal-overlay.active{opacity:1;pointer-events:auto}
-        .modal-content{max-width:900px;width:90%;padding:1.5rem;transform:scale(.95);transition:transform .3s ease-out;max-height:90vh;overflow-y:auto;scrollbar-width:none;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-        .modal-content::-webkit-scrollbar{display:none}
-        @media (min-width:768px){.modal-content{padding:2.5rem}}
-        .modal-overlay.active .modal-content{transform:scale(1);animation:modal-enter 250ms ease-out}
-        @keyframes modal-enter{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-        #modal-image{max-height:40vh}
-        @media (min-width:768px){#modal-image{max-height:70vh}}
+        
+        .slide-bg {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .content-slide {
+            opacity: 0;
+            transition: opacity 0.8s ease-out;
+        }
+        
+        .content-slide.active {
+            opacity: 1;
+        }
+        
+        .image-card {
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            border-radius: 20px;
+            overflow: hidden;
+            width: 140px;
+            height: 180px;
+            border: 2px solid transparent;
+            flex-shrink: 0;
+        }
+        
+        .image-card.active {
+            width: 180px;
+            height: 230px;
+            border: 3px solid white;
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .image-card.inactive {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+        
+        .image-card:hover {
+            transform: scale(1.12);
+            z-index: 20;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        @media (min-width: 1024px) {
+            .image-card {
+                width: 160px;
+                height: 200px;
+            }
+            
+            .image-card.active {
+                width: 200px;
+                height: 250px;
+                transform: scale(1.1);
+            }
+        }
+        
+        .indicator {
+            transition: all 0.4s ease;
+            width: 8px;
+            height: 8px;
+        }
+        
+        .indicator.active {
+            width: 32px;
+            border-radius: 12px;
+        }
+        
+        .nav-hover:hover {
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .overlay-dark {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 100%);
+        }
+        
+        .btn-dynamic {
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-dynamic:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: flex-start;
+            perspective: 1000px;
+            overflow-x: auto;
+            padding: 20px 140px;
+            max-width: 100%;
+            width: 100%;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+        
+        @media (min-width: 1024px) {
+            .card-container {
+                gap: 15px;
+                padding: 20px 225px;
+                max-width: 650px;
+            }
+        }
+        
+        .card-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .card-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .card-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        
+        .card-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        .main-content {
+            max-width: 500px;
+        }
+        
+        /*
+        @media (min-width: 1024px) and (max-width: 1440px) {
+            .slide-title {
+                font-size: clamp(2.2rem, 5vw, 3.2rem);
+            }
+            .slide-description {
+                font-size: 1rem;
+                margin-bottom: 24px;
+            }
+            .main-content {
+                max-width: 420px;
+            }
+        }
+        */
+
+        @media (min-width: 1024px) {
+            .slide-title { font-size: clamp(2.5rem, 4vw, 3.5rem); }
+            .slide-description { font-size: 1.1rem; }
+            .main-content { max-width: 450px; }
+        }
+
+        @media (min-width: 1440px) {
+            .slide-title { font-size: clamp(3.5rem, 5vw, 4.5rem); }
+            .main-content { max-width: 500px; }
+        }
+        
+        .slide-title {
+            font-size: clamp(2rem, 6vw, 3rem);
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        
+        .slide-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 28px;
+            opacity: 0.9;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            max-width: 900px;
+            width: 90%;
+            padding: 1.5rem;
+            transform: scale(0.95);
+            transition: transform 0.3s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
+            scrollbar-width: none; /* Firefox */
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+        .modal-content::-webkit-scrollbar {
+            display: none; /* Safari and Chrome */
+        }
+        @media (min-width: 768px) {
+            .modal-content {
+                padding: 2.5rem;
+            }
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+            animation: modal-enter 250ms ease-out;
+        }
+
+        @keyframes modal-enter {
+            from { opacity: 0; transform: translateY(8px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Imagem do modal responsiva */
+        #modal-image {
+            max-height: 40vh;
+        }
+        @media (min-width: 768px) {
+            #modal-image { max-height: 70vh; }
+        }
     </style>
 </head>
 <body class="font-sans bg-black overflow-hidden">
-    <!-- Fundos -->
+    <!-- Fundo Principal com Slide -->
     <div id="background-a" class="slide-bg fixed inset-0 z-0"></div>
-    <div id="background-b" class="slide-bg fixed inset-0 z-0" style="opacity:0;"></div>
+    <div id="background-b" class="slide-bg fixed inset-0 z-0" style="opacity: 0;"></div>
     <div class="overlay-dark fixed inset-0 z-10"></div>
     <div class="fixed bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black to-transparent z-10 pointer-events-none"></div>
-
+    
     <!-- Header -->
     <header class="relative z-30 flex justify-between items-center p-6 lg:p-8">
         <div class="flex items-center gap-4 flex-shrink-0">
             <img src="https://static.wixstatic.com/media/c96204_a9ec9c9e274d4e598cb7fdd96b2c42cb~mv2.png" alt="Logo MPAC" class="h-8 lg:h-10">
         </div>
+
+        <!-- Desktop Search Bar -->
         <div class="hidden md:flex flex-grow justify-center px-8">
             <div class="relative w-full max-w-md">
                 <input type="text" id="search-input" placeholder="Buscar por título ou categoria..." class="w-full bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 px-6 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white/50 transition-all">
                 <button id="search-btn" class="absolute top-1/2 right-4 -translate-y-1/2 text-white/60 hover:text-white transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
                 </button>
             </div>
         </div>
+        
         <div class="flex items-center space-x-2">
-            <nav class="hidden md:flex space-x-4 flex-shrink-0">
-                <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium"><span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span><span class="relative z-10">Home</span></a>
-                <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium"><span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span><span class="relative z-10">Contato</span></a>
-                <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium"><span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span><span class="relative z-10">Iniciativas</span></a>
-            </nav>
+        <nav class="hidden md:flex space-x-4 flex-shrink-0">
+            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                <span class="relative z-10">Home</span>
+            </a>
+            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                <span class="relative z-10">Contato</span>
+            </a>
+            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+                <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                <span class="relative z-10">Iniciativas</span>
+            </a>
+        </nav>
+    
+            <!-- Mobile Search Icon -->
             <button id="mobile-search-open-btn" class="md:hidden text-white p-2 z-50">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
             </button>
+    
+            <!-- Hamburger Button -->
             <div class="md:hidden flex items-center">
                 <button id="hamburger-btn" class="text-white focus:outline-none z-50">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -88,12 +313,14 @@
             <div class="relative">
                 <input type="text" id="mobile-search-input" placeholder="Buscar por título ou categoria..." class="w-full bg-white/10 border border-white/20 text-white px-6 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white/50">
                 <button id="mobile-search-execute-btn" class="absolute top-1/2 right-4 -translate-y-1/2 text-white/60">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
                 </button>
             </div>
         </div>
     </div>
-
+    
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-black/95 backdrop-blur-md z-40 transition-opacity duration-300 ease-in-out">
         <div class="flex flex-col items-center justify-center h-full">
@@ -104,27 +331,37 @@
             </nav>
         </div>
     </div>
-
+    
     <!-- Conteúdo Principal -->
     <div class="relative z-20 min-h-screen flex items-center">
         <div class="container mx-auto px-6 lg:px-16">
             <div class="flex flex-col lg:flex-row items-center justify-between">
+                <!-- Área de Conteúdo (Esquerda) -->
                 <div class="lg:w-1/2 mb-8 lg:mb-0">
                     <div class="main-content">
-                        <div id="content-container"></div>
+                        <div id="content-container">
+                            <!-- Conteúdo será inserido dinamicamente -->
+                        </div>
                     </div>
                 </div>
+                
+                <!-- Carrossel de Cartões (Direita) e Indicadores -->
                 <div class="w-full lg:w-1/2 flex flex-col items-center lg:items-end mt-8 lg:mt-0">
-                    <div class="card-container" id="image-carousel"></div>
+                    <div class="card-container" id="image-carousel">
+                        <!-- Cartões serão inseridos dinamicamente -->
+                    </div>
+                    <!-- Indicadores -->
                     <div class="flex justify-center w-full mt-6">
-                        <div id="indicators" class="flex space-x-3"></div>
+                        <div id="indicators" class="flex space-x-3">
+                            <!-- Indicadores serão inseridos dinamicamente -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal de Detalhes -->
     <div id="modal-overlay" class="modal-overlay">
         <div id="modal-content" class="modal-content" role="dialog" aria-modal="true">
             <div class="grid grid-cols-1 gap-4 md:gap-8 text-white">
@@ -151,6 +388,466 @@
                 category: "Inovação na Gestão"
             },
             {
-                title: "Ação IMPACTO",
+                title: "Ação Impacto",
                 description: "Método inovador de seleção de projetos no MPAC, focado em maximizar o impacto social positivo das iniciativas.",
-                backgro
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif"],
+                category: "Inovação na Gestão"
+            },
+            {
+                title: "Investigador Cidadão",
+                description: "Capacita cidadãos para atuarem como agentes de fiscalização, fortalecendo a cidadania ativa e a gestão pública.",
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/aad060b2-509e-4fc3-9068-6618cf41e2ca/0.mp4' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_1d6cf800ed19458bad28680700340fdc~mv2.jpg"],
+                category: "Inovação na Gestão"
+            },
+            // Inovação Social
+            {
+                title: "TEA - Eles não estão Sós",
+                description: "Projeto de apoio e inclusão para pessoas com Transtorno do Espectro Autista e suas famílias.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif"],
+                category: "Inovação Social"
+            },
+            {
+                title: "Destine e Proteja",
+                description: "Iniciativa que incentiva a destinação de parte do Imposto de Renda para fundos de proteção à criança e ao adolescente.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif"],
+                category: "Inovação Social"
+            },
+            {
+                title: "Justiça de Gênero",
+                description: "O direito à informação que salva vidas, combatendo a violência de gênero através da conscientização e do acesso à justiça.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif"],
+                category: "Inovação Social"
+            },
+            {
+                title: "Merenda Escolar Regional",
+                description: "Fornecimento de produtos regionais para merenda escolar, valorizando agricultores familiares e a nutrição dos alunos.",
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/282d6d78-7e24-4b78-ba58-17a1f4636a26/1.mp4' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_24956ccb0af8476484e738b040b80615~mv2.avif"],
+                category: "Inovação Social"
+            },
+            // Inovação Tecnológica
+            {
+                title: "SIGE",
+                description: "Sistema Integrado de Gestão Estratégica que otimiza processos e a tomada de decisões no setor público.",
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/3eef4f63-17d0-4ed5-9a19-4b923b3f6c14/0.mp4' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_f6fe012fbf7642f2b8d14aaac87453e2~mv2.avif"],
+                category: "Inovação Tecnológica"
+            },
+            {
+                title: "Radar de Enchentes do MPAC",
+                description: "Ferramenta tecnológica de monitoramento e alerta precoce para áreas de risco de enchentes.",
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/401ae41c-da6e-429f-bdf6-40ab37c30c92/1.mp4' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_9e34639d95c44f179ab5d084678976bf~mv2.avif"],
+                category: "Inovação Tecnológica"
+            },
+            {
+                title: "Feminicidômetro",
+                description: "Sistema de coleta e análise de dados sobre feminicídios para subsidiar políticas de prevenção e combate.",
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/ee428781-517f-453a-bbda-0784e7199b6c/1.mp4' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_e989c57377f04079bea24671e60c7bc4~mv2.jpg"],
+                category: "Inovação Tecnológica"
+            },
+            {
+                title: "ComparaAI",
+                description: "Inteligência Artificial para análise comparativa de documentos e processos, agilizando o trabalho jurídico e administrativo.",
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/44f0f7e3-f962-4517-a6e8-b147fe054d32/0.mp4' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_44e053de6b894422899c6fa181c0229e~mv2.avif"],
+                category: "Inovação Tecnológica"
+            },
+            // Laboratório de Inovação
+            {
+                title: "SeringalLab",
+                description: "Laboratório de inovação do MPAC, um espaço para experimentação e desenvolvimento de soluções criativas para a justiça.",
+                background: { type: 'video', src: 'https://cdn.midjourney.com/video/c29365fc-32eb-4597-afac-7b2cbf93ec33/1.mp4' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_574c631197124f51a43e57f1dfc33960~mv2.avif"],
+                category: "Laboratório de Inovação"
+            },
+            // Ensino
+            {
+                title: "LEAAM",
+                description: "Laboratório de Estágio em Apoio à Atividade Ministerial, unindo academia e prática para formar futuros profissionais do direito.",
+                background: { type: 'image', src: 'https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif' },
+                cardImages: ["https://static.wixstatic.com/media/c96204_3528f8db795447d9a73f1d8e2b681936~mv2.avif"],
+                category: "Ensino"
+            }
+        ];
+
+        let originalSlides = [...slides];
+        let displayedSlides = [...slides];
+        let currentSlide = 0;
+        let autoSlideInterval;
+        let bgA, bgB, activeBg;
+
+        function initializeSlider() {
+            bgA = document.getElementById('background-a');
+            bgB = document.getElementById('background-b');
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-btn');
+            
+            setSlideBackground(bgA, displayedSlides[0].background);
+            activeBg = bgA;
+
+            renderIndicators();
+            renderImageCards();
+            updateSlide(true); // Marca como inicialização
+            startAutoSlide();
+
+            const desktopSearch = () => {
+                performSearchLogic(searchInput.value.toLowerCase().trim(), searchInput.value);
+            };
+            searchBtn.addEventListener('click', desktopSearch);
+            searchInput.addEventListener('input', desktopSearch);
+            searchInput.addEventListener('keydown', e => {
+                if (e.key === 'Escape') {
+                    searchInput.value = '';
+                    desktopSearch();
+                }
+            });
+            
+            document.getElementById('modal-overlay').addEventListener('click', (e) => {
+                if (e.target.id === 'modal-overlay' || e.target.id === 'modal-close') {
+                    closeModal();
+                }
+            });
+        }
+
+        function renderIndicators() {
+            const indicatorsContainer = document.getElementById('indicators');
+            indicatorsContainer.innerHTML = '';
+            const wineRedColor = 'bg-red-800';
+            
+            displayedSlides.forEach((_, index) => {
+                const indicator = document.createElement('div');
+                indicator.className = `indicator rounded-full ${wineRedColor} cursor-pointer`;
+                indicator.addEventListener('click', () => goToSlide(index));
+                indicatorsContainer.appendChild(indicator);
+            });
+        }
+
+        function renderImageCards() {
+            const carouselContainer = document.getElementById('image-carousel');
+            carouselContainer.innerHTML = '';
+            
+            displayedSlides.forEach((slide, index) => {
+                const card = document.createElement('div');
+                card.className = 'image-card';
+                card.innerHTML = `<img src="${slide.cardImages[0]}" alt="${slide.title}" class="w-full h-full object-cover">`;
+                card.addEventListener('click', () => goToSlide(index));
+                carouselContainer.appendChild(card);
+            });
+
+            carouselContainer.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+            carouselContainer.addEventListener('mouseleave', () => restartAutoSlide());
+        }
+
+        function updateSlide(isInitial = false) {
+            if (displayedSlides.length === 0) return;
+
+            // Atualizar fundo com cross-fade
+            if (!isInitial) {
+                const inactiveBg = (activeBg === bgA) ? bgB : bgA;
+                setSlideBackground(inactiveBg, displayedSlides[currentSlide].background);
+                activeBg.style.opacity = '0';
+                inactiveBg.style.opacity = '1';
+                activeBg = inactiveBg;
+            }
+            
+            // Atualizar conteúdo
+            const contentContainer = document.getElementById('content-container');
+            contentContainer.innerHTML = `
+                <div class="content-slide">
+                    <p class="text-sm font-medium tracking-wider mb-3 uppercase" style="color: #ff4c4c;">${displayedSlides[currentSlide].category}</p>
+                    <h1 class="slide-title font-serif font-bold text-white">${displayedSlides[currentSlide].title}</h1>
+                    <p class="slide-description text-white">${displayedSlides[currentSlide].description}</p>
+                    <button class="relative btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 lg:px-8 lg:py-4 rounded-full text-sm lg:text-base">
+                        <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                        <span class="relative z-10">Explore Agora</span>
+                    </button>
+                </div>
+            `;
+            
+            // Adicionar evento ao botão Explore Agora
+            contentContainer.querySelector('button').addEventListener('click', () => {
+                openModal(displayedSlides[currentSlide]);
+            });
+
+            // Aplicar animação de entrada
+            setTimeout(() => {
+                const contentSlide = document.querySelector('.content-slide');
+                contentSlide.classList.add('active');
+            }, 100);
+            
+            // Atualizar indicadores
+            updateIndicators();
+            
+            // Atualizar cartões de imagem
+            updateImageCards();
+        }
+
+        function updateIndicators() {
+            if (displayedSlides.length === 0) return;
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.remove('active', 'bg-opacity-100');
+                indicator.classList.add('bg-opacity-40');
+                
+                if (index === currentSlide) {
+                    indicator.classList.add('active');
+                    indicator.classList.remove('bg-opacity-40');
+                    indicator.classList.add('bg-opacity-100');
+                }
+            });
+        }
+
+        function updateImageCards() {
+            if (displayedSlides.length === 0) return;
+            const cards = document.querySelectorAll('.image-card');
+            const container = document.getElementById('image-carousel');
+            
+            cards.forEach((card, index) => {
+                card.classList.remove('active', 'inactive');
+                
+                if (index === currentSlide) {
+                    card.classList.add('active');
+                    // Scroll suave para centralizar o cartão ativo
+                    setTimeout(() => {
+                        const containerRect = container.getBoundingClientRect();
+                        const cardRect = card.getBoundingClientRect();
+                        const scrollLeft = card.offsetLeft - (containerRect.width / 2) + (cardRect.width / 2);
+                        container.scrollTo({
+                            left: scrollLeft,
+                            behavior: 'smooth'
+                        });
+                    }, 100);
+                } else {
+                    card.classList.add('inactive');
+                }
+            });
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlide();
+            restartAutoSlide();
+        }
+
+        function nextSlide() {
+            if (displayedSlides.length === 0) return;
+            currentSlide = (currentSlide + 1) % displayedSlides.length;
+            updateSlide();
+        }
+
+        function prevSlide() {
+            if (displayedSlides.length === 0) return;
+            currentSlide = (currentSlide - 1 + displayedSlides.length) % displayedSlides.length;
+            updateSlide();
+        }
+
+        function startAutoSlide() {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = setInterval(nextSlide, 4000);
+        }
+
+        function restartAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+        function openModal(slide) {
+            const overlay = document.getElementById('modal-overlay');
+            document.getElementById('modal-category').textContent = slide.category;
+            document.getElementById('modal-title').textContent = slide.title;
+            document.getElementById('modal-description').textContent = slide.description;
+
+            const moreInfoEl = document.getElementById('modal-more');
+            const defaultMore = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`;
+            if (slide.title === 'Observatório de Políticas Públicas - OPP') {
+                moreInfoEl.innerHTML = `
+                    <p class="mb-3">O Observatório de Políticas Públicas (OPP) do Ministério Público do Estado do Acre (MPAC) representa uma inovação significativa no acompanhamento da gestão pública no estado. Criado em 2024, o OPP se destaca pela sua contribuição para a transparência e o controle social, monitorando a execução de políticas públicas de acordo com o Plano Plurianual (PPA), a Lei de Diretrizes Orçamentárias (LDO) e a Lei Orçamentária Anual (LOA).</p>
+                    <p class="mb-4"><strong>Setor responsável</strong>: Núcleo de Apoio Técnico (NAT)</p>
+                    <a href="https://nat.mpac.mp.br/observatorio-de-politicas-publicas/" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
+                        <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+                        <span class="relative z-10">Acessar OPP</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </a>
+                `;
+            } else {
+                moreInfoEl.textContent = defaultMore;
+            }
+
+            overlay.classList.add('active');
+            clearInterval(autoSlideInterval); // Pausa o slide show
+            document.body.style.overflow = 'hidden';
+            const closeBtn = document.getElementById('modal-close');
+            closeBtn.focus();
+        }
+
+        function closeModal() {
+            const overlay = document.getElementById('modal-overlay');
+            overlay.classList.remove('active');
+            startAutoSlide(); // Retoma o slide show
+            document.body.style.overflow = '';
+        }
+
+        function setSlideBackground(element, background) {
+            element.innerHTML = '';
+            element.style.backgroundImage = 'none';
+
+            if (background.type === 'video') {
+                const video = document.createElement('video');
+                video.className = 'w-full h-full object-cover';
+                video.autoplay = true;
+                video.muted = true;
+                video.loop = true;
+                video.playsInline = true;
+
+                const source = document.createElement('source');
+                source.src = background.src;
+                source.type = 'video/mp4';
+
+                video.appendChild(source);
+                element.appendChild(video);
+            } else {
+                element.style.backgroundImage = `url('${background.src}')`;
+            }
+        }
+
+        function performSearchLogic(searchTerm, rawQuery) {
+            clearInterval(autoSlideInterval);
+
+            if (searchTerm === '') {
+                displayedSlides = [...originalSlides];
+            } else {
+                displayedSlides = originalSlides.filter(slide => 
+                    slide.title.toLowerCase().includes(searchTerm) || 
+                    slide.category.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            currentSlide = 0;
+
+            if (displayedSlides.length === 0) {
+                const contentContainer = document.getElementById('content-container');
+                contentContainer.innerHTML = `
+                    <div class="content-slide active">
+                        <h1 class="slide-title font-serif font-bold text-white">Nenhum resultado</h1>
+                        <p class="slide-description text-white">Não encontramos nada para "${rawQuery}". Tente uma nova busca.</p>
+                    </div>
+                `;
+                document.getElementById('image-carousel').innerHTML = '';
+                document.getElementById('indicators').innerHTML = '';
+                bgA.style.backgroundImage = '';
+                bgA.innerHTML = '';
+                bgB.style.backgroundImage = '';
+                bgB.innerHTML = '';
+                return;
+            }
+
+            renderIndicators();
+            renderImageCards();
+            updateSlide();
+            startAutoSlide();
+        }
+
+        // Controle por teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+                restartAutoSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+                restartAutoSlide();
+            } else if (e.key === 'Escape') {
+                const overlay = document.getElementById('modal-overlay');
+                if (overlay.classList.contains('active')) {
+                    closeModal();
+                }
+            }
+        });
+
+        // Inicializar slider
+        initializeSlider();
+
+        // Mobile Menu Logic
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mainContent = document.querySelector('.relative.z-20');
+
+        let isMenuOpen = false;
+
+        const openIcon = `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>`;
+        const closeIcon = `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+
+        hamburgerBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            mobileMenu.classList.toggle('hidden');
+            
+            if (isMenuOpen) {
+                hamburgerBtn.innerHTML = closeIcon;
+                mainContent.style.filter = 'blur(5px)';
+            } else {
+                hamburgerBtn.innerHTML = openIcon;
+                mainContent.style.filter = 'none';
+            }
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.add('hidden');
+                hamburgerBtn.innerHTML = openIcon;
+                mainContent.style.filter = 'none';
+            });
+        });
+
+        // Mobile Search Overlay Logic
+        const mobileSearchOpenBtn = document.getElementById('mobile-search-open-btn');
+        const mobileSearchCloseBtn = document.getElementById('mobile-search-close-btn');
+        const mobileSearchOverlay = document.getElementById('mobile-search-overlay');
+        const mobileSearchInput = document.getElementById('mobile-search-input');
+        const mobileSearchExecuteBtn = document.getElementById('mobile-search-execute-btn');
+
+        let isMobileSearchOpen = false;
+
+        mobileSearchOpenBtn.addEventListener('click', () => {
+            isMobileSearchOpen = true;
+            mobileSearchOverlay.classList.remove('hidden');
+            mobileSearchInput.focus();
+        });
+
+        mobileSearchCloseBtn.addEventListener('click', () => {
+            isMobileSearchOpen = false;
+            mobileSearchOverlay.classList.add('hidden');
+            mobileSearchInput.value = '';
+        });
+
+        mobileSearchInput.addEventListener('input', () => {
+            if (mobileSearchInput.value.length > 0) {
+                mobileSearchExecuteBtn.classList.remove('text-white/60');
+                mobileSearchExecuteBtn.classList.add('text-white');
+            } else {
+                mobileSearchExecuteBtn.classList.remove('text-white');
+                mobileSearchExecuteBtn.classList.add('text-white/60');
+            }
+        });
+
+        const mobileSearch = () => {
+            performSearchLogic(mobileSearchInput.value.toLowerCase().trim(), mobileSearchInput.value);
+            isMobileSearchOpen = false;
+            mobileSearchOverlay.classList.add('hidden');
+        };
+
+        mobileSearchExecuteBtn.addEventListener('click', mobileSearch);
+        mobileSearchInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                mobileSearch();
+            }
+        });
+    </script>
+</body>
+</html>
