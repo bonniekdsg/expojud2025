@@ -786,7 +786,22 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
       </svg>
     </a>
-  `;   
+  `; 
+  } else if (slide.title === 'Feminicidômetro') {
+  moreInfoEl.innerHTML = `
+    <p class="mb-3">O <strong>Feminicidômetro</strong> é uma ferramenta de pesquisa e controle social que proporciona à população acesso a informações não sensíveis dos processos dos crimes de feminicídios no Acre. Seu objetivo é subsidiar melhorias no tempo da persecução e no sistema de justiça. A plataforma organiza as etapas em uma linha do tempo, desde a ocorrência do crime até a sentença final, permitindo que a sociedade acompanhe o tempo das denúncias, julgamentos, recursos e decisões, além de reunir estudos, publicações e informações sobre a atuação ministerial.</p>
+
+    <p class="mb-4">Nos últimos oito anos, 83 mulheres foram vítimas de feminicídio no Acre — crimes que refletem a violência estrutural de gênero. Ao tornar visíveis os dados e monitorar a persecução penal, o Feminicidômetro fortalece a atuação institucional, sensibiliza a sociedade e subsidia e fomenta a construção de políticas públicas de prevenção e proteção das mulheres.</p>
+
+    <p class="mb-4"><strong>Setor responsável</strong>: Observatório de Violência de Gênero (OBSGênero)</p>
+    <a href="https://feminicidometro.mpac.mp.br/sobre" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
+      <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+      <span class="relative z-10">Acessar Plataforma</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+    </a>
+  `;
 
   } else {
     moreInfoEl.textContent = defaultMore;
