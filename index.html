@@ -659,57 +659,56 @@
         }
 
         function openModal(slide) {
-            const overlay = document.getElementById('modal-overlay');
-            document.getElementById('modal-category').textContent = slide.category;
-            document.getElementById('modal-title').textContent = slide.title;
-            document.getElementById('modal-description').textContent = slide.description;
+  const overlay = document.getElementById('modal-overlay');
+  document.getElementById('modal-category').textContent = slide.category;
+  document.getElementById('modal-title').textContent = slide.title;
+  document.getElementById('modal-description').textContent = slide.description;
 
-            const moreInfoEl = document.getElementById('modal-more');
-            const defaultMore = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`;
-            if (slide.title === 'Observatório de Políticas Públicas - OPP') {
-                moreInfoEl.innerHTML = `
-                    <p class="mb-3">O Observatório de Políticas Públicas (OPP) do Ministério Público do Estado do Acre (MPAC) representa uma inovação significativa no acompanhamento da gestão pública no estado. Criado em 2024, o OPP se destaca pela sua contribuição para a transparência e o controle social, monitorando a execução de políticas públicas de acordo com o Plano Plurianual (PPA), a Lei de Diretrizes Orçamentárias (LDO) e a Lei Orçamentária Anual (LOA).</p>
-                    <p class="mb-4"><strong>Setor responsável</strong>: Núcleo de Apoio Técnico (NAT)</p>
-                    <a href="https://nat.mpac.mp.br/observatorio-de-politicas-publicas/" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
-                        <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
-                        <span class="relative z-10">Acessar OPP</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                    </a>
-                 `;
-} else if (slide.title === 'Ação Impacto' || slide.title === 'Ação IMPACTO') {
+  const moreInfoEl = document.getElementById('modal-more');
+  const defaultMore = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`;
+
+  if (slide.title === 'Observatório de Políticas Públicas - OPP') {
     moreInfoEl.innerHTML = `
-        <p class="mb-3">A Ação Institucional <strong>IMPACTO</strong> é uma iniciativa do Ministério Público do Estado do Acre (MPAC) que incentiva membros e servidores a desenvolver projetos inovadores e resolutivos para enfrentar desafios sociais, ambientais e institucionais. Com critérios técnicos e alinhamento ao planejamento estratégico, adota um modelo diferenciado de seleção, apoiando financeiramente as propostas, acompanhando sua execução e reconhecendo os melhores resultados com o <strong>Selo IMPACTO</strong>.</p>
-        <p class="mb-4"><strong>Setor responsável</strong>: Secretaria de Planejamento Institucional e Inovação</p>
-        <a href="https://impacto.mpac.mp.br/" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
-            <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
-            <span class="relative z-10">Acessar IMPACTO</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-        </a>
+      <p class="mb-3">O Observatório de Políticas Públicas (OPP) do Ministério Público do Estado do Acre (MPAC) representa uma inovação significativa no acompanhamento da gestão pública no estado. Criado em 2024, o OPP se destaca pela sua contribuição para a transparência e o controle social, monitorando a execução de políticas públicas de acordo com o Plano Plurianual (PPA), a Lei de Diretrizes Orçamentárias (LDO) e a Lei Orçamentária Anual (LOA).</p>
+      <p class="mb-4"><strong>Setor responsável</strong>: Núcleo de Apoio Técnico (NAT)</p>
+      <a href="https://nat.mpac.mp.br/observatorio-de-politicas-publicas/" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
+        <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+        <span class="relative z-10">Acessar OPP</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+      </a>
     `;
-                else if (slide.title === 'Investigador Cidadão') {
+  } else if (slide.title === 'Ação Impacto' || slide.title === 'Ação IMPACTO') {
     moreInfoEl.innerHTML = `
-        <p class="mb-3">O projeto, criado pelo Ministério Público do Estado do Acre (MPAC), ampliou a forma de combate ao crime organizado com a implantação do disque-denúncia via WhatsApp. A ferramenta permite que a população encaminhe, de forma anônima, segura e sigilosa, informações sobre organizações criminosas, auxiliando na identificação de lideranças, foragidos, esconderijos e crimes graves como homicídios, tortura, extorsão e lavagem de dinheiro.</p>
-        <p class="mb-4"><strong>Setor responsável</strong>: Núcleo de Apoio Técnico (NAT)</p>
-        <a href="https://bancodeprojetos.cnmp.mp.br/Detalhe?idProjeto=4502" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
-            <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
-            <span class="relative z-10">Acessar Projeto</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-        </a>
+      <p class="mb-3">A Ação Institucional <strong>IMPACTO</strong> é uma iniciativa do Ministério Público do Estado do Acre (MPAC) que incentiva membros e servidores a desenvolver projetos inovadores e resolutivos para enfrentar desafios sociais, ambientais e institucionais. Com critérios técnicos e alinhamento ao planejamento estratégico, adota um modelo diferenciado de seleção, apoiando financeiramente as propostas, acompanhando sua execução e reconhecendo os melhores resultados com o <strong>Selo IMPACTO</strong>.</p>
+      <p class="mb-4"><strong>Setor responsável</strong>: Secretaria de Planejamento Institucional e Inovação</p>
+      <a href="https://impacto.mpac.mp.br/" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
+        <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+        <span class="relative z-10">Acessar IMPACTO</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+      </a>
     `;
+  } else if (slide.title === 'Investigador Cidadão') {
+    moreInfoEl.innerHTML = `
+      <p class="mb-3">O projeto, criado pelo Ministério Público do Estado do Acre (MPAC), ampliou a forma de combate ao crime organizado com a implantação do disque-denúncia via WhatsApp. A ferramenta permite que a população encaminhe, de forma anônima, segura e sigilosa, informações sobre organizações criminosas, auxiliando na identificação de lideranças, foragidos, esconderijos e crimes graves como homicídios, tortura, extorsão e lavagem de dinheiro.</p>
+      <p class="mb-4"><strong>Setor responsável</strong>: Núcleo de Apoio Técnico (NAT)</p>
+      <a href="https://bancodeprojetos.cnmp.mp.br/Detalhe?idProjeto=4502" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
+        <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+        <span class="relative z-10">Acessar Projeto</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    `;
+  } else {
+    moreInfoEl.textContent = defaultMore;
+  }
+
+  overlay.classList.add('active');
+  clearInterval(autoSlideInterval);
+  document.body.style.overflow = 'hidden';
+  document.getElementById('modal-close').focus();
 }
 
-            } else {
-                moreInfoEl.textContent = defaultMore;
-            }
-
-            overlay.classList.add('active');
-            clearInterval(autoSlideInterval); // Pausa o slide show
-            document.body.style.overflow = 'hidden';
-            const closeBtn = document.getElementById('modal-close');
-            closeBtn.focus();
-        }
 
         function closeModal() {
             const overlay = document.getElementById('modal-overlay');
