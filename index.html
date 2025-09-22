@@ -675,7 +675,17 @@
                         <span class="relative z-10">Acessar OPP</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                     </a>
-                `;
+                 `;
+} else if (slide.title === 'Ação Impacto' || slide.title === 'Ação IMPACTO') {
+    moreInfoEl.innerHTML = `
+        <p class="mb-3">A Ação Institucional <strong>IMPACTO</strong> é uma iniciativa do Ministério Público do Estado do Acre (MPAC) que incentiva membros e servidores a desenvolver projetos inovadores e resolutivos para enfrentar desafios sociais, ambientais e institucionais. Com critérios técnicos e alinhamento ao planejamento estratégico, adota um modelo diferenciado de seleção, apoiando financeiramente as propostas, acompanhando sua execução e reconhecendo os melhores resultados com o <strong>Selo IMPACTO</strong>.</p>
+        <p class="mb-4"><strong>Setor responsável</strong>: Secretaria de Planejamento Institucional e Inovação</p>
+        <a href="https://impacto.mpac.mp.br/" target="_blank" rel="noopener" class="relative inline-flex items-center gap-2 btn-dynamic group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-full text-sm">
+            <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
+            <span class="relative z-10">Acessar IMPACTO</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </a>
+    `;
             } else {
                 moreInfoEl.textContent = defaultMore;
             }
