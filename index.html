@@ -278,7 +278,7 @@
                 <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
                 <span class="relative z-10">Home</span>
             </a>
-            <a href="#" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
+            <a href="#" id="contact-btn" class="relative group overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full font-medium">
                 <span class="absolute inset-0 bg-red-700 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 ease-out"></span>
                 <span class="relative z-10">Contato</span>
             </a>
@@ -383,6 +383,126 @@
             </div>
         </div>
         <button id="modal-close" class="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-2xl" aria-label="Fechar modal">&times;</button>
+    </div>
+
+    <!-- Modal de Contato -->
+    <div id="contact-modal-overlay" class="modal-overlay">
+        <div id="contact-modal-content" class="modal-content" role="dialog" aria-modal="true">
+            <div class="text-white">
+                <h2 class="text-2xl md:text-4xl font-serif font-bold mb-6 text-center">Contatos MPAC</h2>
+
+                <!-- Links Principais -->
+                <div class="mb-8">
+                    <h3 class="font-bold text-lg md:text-xl mb-4 text-red-400">Links Principais</h3>
+                    <div class="space-y-3">
+                        <a href="https://www.mpac.mp.br/" target="_blank" rel="noopener" class="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20">
+                            <div class="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                    <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm md:text-base">MPAC - Site Oficial</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Redes Sociais -->
+                <div class="mb-8">
+                    <h3 class="font-bold text-lg md:text-xl mb-4 text-red-400">Redes Sociais</h3>
+                    <div class="space-y-3">
+                        <a href="https://www.instagram.com/mpacre/" target="_blank" rel="noopener" class="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20">
+                            <div class="w-8 h-8 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm md:text-base">Instagram MPAC</span>
+                        </a>
+                        <a href="https://www.youtube.com/mpacre" target="_blank" rel="noopener" class="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20">
+                            <div class="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm md:text-base">Youtube MPAC</span>
+                        </a>
+                        <a href="https://www.facebook.com/mpacre" target="_blank" rel="noopener" class="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20">
+                            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm md:text-base">Facebook MPAC</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Setores e Departamentos -->
+                <div>
+                    <h3 class="font-bold text-lg md:text-xl mb-4 text-red-400">Setores e Departamentos</h3>
+                    <div class="space-y-3">
+                        <a href="https://www.mpac.mp.br/atendimento-ao-cidadao/ouvidoria/canais-de-comunicacao/" target="_blank" rel="noopener" class="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20">
+                            <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm md:text-base">Ouvidoria-Geral do MPAC</span>
+                        </a>
+                        <a href="https://www.mpac.mp.br/nat/" target="_blank" rel="noopener" class="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20">
+                            <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm md:text-base">Núcleo de Apoio Técnico - NAT</span>
+                        </a>
+                        <a href="https://www.mpac.mp.br/atendimento-ao-cidadao/cav/" target="_blank" rel="noopener" class="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20">
+                            <div class="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm md:text-base">Centro de Atendimento à Vítima – CAV</span>
+                        </a>
+                        <a href="https://www.mpac.mp.br/natera/" target="_blank" rel="noopener" class="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20">
+                            <div class="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm md:text-base">Núcleo de Apoio e Atendimento Psicossocial – NATERA</span>
+                        </a>
+                        <a href="https://nat.mpac.mp.br/observatorio-de-analise-criminal/" target="_blank" rel="noopener" class="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20">
+                            <div class="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm md:text-base">Observatório de Análise Criminal</span>
+                        </a>
+                        <a href="https://ceaf.mpac.mp.br/" target="_blank" rel="noopener" class="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20">
+                            <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm md:text-base">Centro de Estudos e Aperfeiçoamento Funcional - CEAF</span>
+                        </a>
+                        <a href="https://www.mpac.mp.br/atendimento-ao-cidadao/cac/" target="_blank" rel="noopener" class="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20">
+                            <div class="w-8 h-8 bg-cyan-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm md:text-base">Centro de Atendimento ao Cidadão – CAC</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="contact-modal-close" class="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-2xl" aria-label="Fechar modal">&times;</button>
     </div>
 
     <!-- Rodapé com informações de contato -->
@@ -947,21 +1067,7 @@
             startAutoSlide();
         }
 
-        // Controle por teclado
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') {
-                nextSlide();
-                restartAutoSlide();
-            } else if (e.key === 'ArrowLeft') {
-                prevSlide();
-                restartAutoSlide();
-            } else if (e.key === 'Escape') {
-                const overlay = document.getElementById('modal-overlay');
-                if (overlay.classList.contains('active')) {
-                    closeModal();
-                }
-            }
-        });
+        // Controle por teclado será adicionado junto com o modal de contato
 
         // Inicializar slider
         initializeSlider();
@@ -1039,6 +1145,56 @@
         mobileSearchInput.addEventListener('keydown', e => {
             if (e.key === 'Enter') {
                 mobileSearch();
+            }
+        });
+
+        // Contact Modal Logic
+        const contactBtn = document.getElementById('contact-btn');
+        const contactModalOverlay = document.getElementById('contact-modal-overlay');
+        const contactModalClose = document.getElementById('contact-modal-close');
+
+        function openContactModal() {
+            contactModalOverlay.classList.add('active');
+            clearInterval(autoSlideInterval);
+            document.body.style.overflow = 'hidden';
+            contactModalClose.focus();
+        }
+
+        function closeContactModal() {
+            contactModalOverlay.classList.remove('active');
+            startAutoSlide();
+            document.body.style.overflow = '';
+        }
+
+        contactBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openContactModal();
+        });
+
+        contactModalClose.addEventListener('click', closeContactModal);
+
+        contactModalOverlay.addEventListener('click', (e) => {
+            if (e.target.id === 'contact-modal-overlay') {
+                closeContactModal();
+            }
+        });
+
+        // Update the existing keyboard event listener to include contact modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+                restartAutoSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+                restartAutoSlide();
+            } else if (e.key === 'Escape') {
+                const overlay = document.getElementById('modal-overlay');
+                const contactOverlay = document.getElementById('contact-modal-overlay');
+                if (overlay.classList.contains('active')) {
+                    closeModal();
+                } else if (contactOverlay.classList.contains('active')) {
+                    closeContactModal();
+                }
             }
         });
     </script>
