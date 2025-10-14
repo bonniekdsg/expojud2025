@@ -1790,6 +1790,53 @@
             }
         }
     </script>
-</body>
+        <!-- GA4: rastrear cliques nos cards de iniciativas -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+              // observa o DOM porque os cards são criados dinamicamente
+              const observer = new MutationObserver(() => {
+                document.querySelectorAll('.image-card').forEach(card => {
+                  if (!card.hasAttribute('data-analytics-added')) {
+                    const nome = card.querySelector('img')?.alt 
+                                 || card.getAttribute('data-title') 
+                                 || 'Sem nome';
+                    card.addEventListener('click', () => {
+                      gtag('event', 'click_iniciativa', {
+                        event_category: 'Iniciativas',
+                        event_label: nome
+                      });
+                      // console.log(`GA4: click_iniciativa -> ${nome}`);
+                    });
+                    card.setAttribute('data-analytics-added', 'true');
+                  }
+                });
+              });
+      
+              observer.observe(document.body, { childList: true, subtree: true });
+      
+              // (Opcional) rastrear botões do topo
+              const finalistsBtn = document.getElementById('finalists-btn');
+              if (finalistsBtn) {
+                finalistsBtn.addEventListener('click', () => {
+                  gtag('event', 'click_topbar', {
+                    event_category: 'Navegacao',
+                    event_label: 'Finalistas Premio J.Ex'
+                  });
+                });
+              }
+              const contactBtn = document.getElementById('contact-btn');
+              if (contactBtn) {
+                contactBtn.addEventListener('click', () => {
+                  gtag('event', 'click_topbar', {
+                    event_category: 'Navegacao',
+                    event_label: 'Contato'
+                  });
+                });
+              }
+            });
+          </script>
+      </body>
+      </html>
+      
 </body>
 </html>
