@@ -1790,53 +1790,96 @@
             }
         }
     </script>
-        <!-- GA4: rastrear cliques nos cards de iniciativas -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-              // observa o DOM porque os cards são criados dinamicamente
-              const observer = new MutationObserver(() => {
-                document.querySelectorAll('.image-card').forEach(card => {
-                  if (!card.hasAttribute('data-analytics-added')) {
-                    const nome = card.querySelector('img')?.alt 
-                                 || card.getAttribute('data-title') 
-                                 || 'Sem nome';
-                    card.addEventListener('click', () => {
-                      gtag('event', 'click_iniciativa', {
-                        event_category: 'Iniciativas',
-                        event_label: nome
-                      });
-                      // console.log(`GA4: click_iniciativa -> ${nome}`);
-                    });
-                    card.setAttribute('data-analytics-added', 'true');
-                  }
-                });
-              });
-      
-              observer.observe(document.body, { childList: true, subtree: true });
-      
-              // (Opcional) rastrear botões do topo
-              const finalistsBtn = document.getElementById('finalists-btn');
-              if (finalistsBtn) {
-                finalistsBtn.addEventListener('click', () => {
-                  gtag('event', 'click_topbar', {
-                    event_category: 'Navegacao',
-                    event_label: 'Finalistas Premio J.Ex'
-                  });
-                });
-              }
-              const contactBtn = document.getElementById('contact-btn');
-              if (contactBtn) {
-                contactBtn.addEventListener('click', () => {
-                  gtag('event', 'click_topbar', {
-                    event_category: 'Navegacao',
-                    event_label: 'Contato'
-                  });
-                });
-              }
+
+<!-- BEGIN: GA4 click_iniciativa hardening (added by ChatGPT) -->
+<script>
+(function() {
+  // Ensure all cards have a stable data-title based on their IMG alt
+  function stampTitlesOnCards() {
+    try {
+      document.querySelectorAll('.image-card').forEach(function(card){
+        if (!card.getAttribute('data-title')) {
+          var img = card.querySelector('img');
+          if (img && img.getAttribute('alt')) {
+            card.setAttribute('data-title', img.getAttribute('alt'));
+          }
+        }
+      });
+    } catch (e) { /* noop */ }
+  }
+
+  // Delegate clicks on cards to send GA4 event with a reliable label
+  function setupDelegatedCardClicks() {
+    document.addEventListener('click', function(ev){
+      var card = ev.target && ev.target.closest ? ev.target.closest('.image-card') : null;
+      if (!card) return;
+      // Make sure title is present
+      stampTitlesOnCards();
+      var nome = card.getAttribute('data-title') ||
+                 (card.querySelector('img') && card.querySelector('img').getAttribute('alt')) ||
+                 'Sem nome';
+      if (typeof gtag === 'function') {
+        try {
+          gtag('event', 'click_iniciativa', {
+            event_category: 'Iniciativas',
+            event_label: nome
+          });
+        } catch (e) { /* noop */ }
+      }
+    }, true);
+  }
+
+  // Track "Explore Agora" button clicks with the current slide title, if available
+  function setupExploreButtonTracking() {
+    function bind(btn) {
+      if (!btn || btn.__ga_bind) return;
+      btn.__ga_bind = true;
+      btn.addEventListener('click', function(){
+        var nome = 'Sem nome';
+        try {
+          if (typeof displayedSlides !== 'undefined' && typeof currentSlide !== 'undefined') {
+            var slide = displayedSlides[currentSlide] || null;
+            if (slide && (slide.title || slide.name)) nome = slide.title || slide.name;
+          }
+        } catch (e) {}
+        if (typeof gtag === 'function') {
+          try {
+            gtag('event', 'click_iniciativa', {
+              event_category: 'Iniciativas',
+              event_label: nome
             });
-          </script>
-      </body>
-      </html>
-      
+          } catch (e) { /* noop */ }
+        }
+      }, true);
+    }
+
+    // Try to bind immediately
+    bind(document.getElementById('explore-btn'));
+
+    // ...and observe DOM changes to bind if the button is rendered later
+    try {
+      var mo = new MutationObserver(function(){
+        bind(document.getElementById('explore-btn'));
+        stampTitlesOnCards();
+      });
+      mo.observe(document.documentElement, {subtree: true, childList: true});
+    } catch (e) {}
+  }
+
+  // Kick it off after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      stampTitlesOnCards();
+      setupDelegatedCardClicks();
+      setupExploreButtonTracking();
+    });
+  } else {
+    stampTitlesOnCards();
+    setupDelegatedCardClicks();
+    setupExploreButtonTracking();
+  }
+})();
+</script>
+<!-- END: GA4 click_iniciativa hardening (added by ChatGPT) -->
 </body>
 </html>
